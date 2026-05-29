@@ -7,6 +7,9 @@ pipeline {
     environment {
         COURSE = "Jenkins for Beginners"
     }
+    options{
+        timeout(time: 10, unit: 'SECONDS')
+    }
     stages {
         stage('Build') {
             steps {
@@ -14,6 +17,7 @@ pipeline {
                     sh """
                     echo "Building the project..."
                     echo $COURSE
+                    sleep 10
                     env
                     """
                 }
@@ -48,6 +52,9 @@ pipeline {
         }
         failure {
             echo 'This will run only if the build fails'
+        }
+        aborted {
+            echo 'This will run only if the build is aborted'
         }
     }
 }
